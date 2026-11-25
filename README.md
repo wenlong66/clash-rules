@@ -159,6 +159,7 @@ rule-providers:
 #### 白名单模式 Rules 配置方式（推荐）
 
 - 默认不启用广告拦截或 `applications` 应用进程直连，流量按后续域名和 IP 规则分流。
+- `fonts.gstatic.com` 优先直连，避免字体流量经过代理服务器后被中国 IP 出站限制拦截，导致 AdMob 图标显示为文字；其余 Google 流量仍走代理。
 - 白名单模式，意为「**没有命中规则的网络流量，统统使用代理**」，适用于服务器线路网络质量稳定、快速，不缺服务器流量的用户。
 - 以下配置中，除了 `DIRECT` 是默认存在于 Clash 中的 policy（路由策略/流量处理策略），其余均为自定义 policy，对应配置文件中 `proxies` 或 `proxy-groups` 中的 `name`。如你直接使用下面的 `rules` 规则，则需要在 `proxies` 或 `proxy-groups` 中手动配置一个 `name` 为 `PROXY` 的 policy。
 - 如你希望 Apple、iCloud 和 Google 列表中的域名使用代理，则把 policy 由 `DIRECT` 改为 `PROXY`，以此类推，举一反三。
@@ -168,6 +169,7 @@ rule-providers:
 rules:
   - DOMAIN,clash.razord.top,DIRECT
   - DOMAIN,yacd.haishan.me,DIRECT
+  - DOMAIN,fonts.gstatic.com,DIRECT
   - RULE-SET,private,DIRECT
   - RULE-SET,icloud,DIRECT
   - RULE-SET,apple,DIRECT
